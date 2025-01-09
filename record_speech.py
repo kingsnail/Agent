@@ -27,6 +27,8 @@ def record_speech():
     FORMAT = pyaudio.paInt16
     # mono, change to 2 if you want stereo
     channels = 1
+    # device index on this system
+    device_index = 1
     # 44100 samples per second
     sample_rate = 44100
     record_seconds = 10
@@ -38,7 +40,8 @@ def record_speech():
                     rate=sample_rate,
                     input=True,
                     output=True,
-                    frames_per_buffer=chunk)
+                    frames_per_buffer=chunk,
+                    input_device_index=device_index)
     frames = []
     try:
         s_count   = 0
