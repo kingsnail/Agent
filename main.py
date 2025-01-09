@@ -1,4 +1,4 @@
-import "record_speech";
+import record_speech;
 
 print("Starting...");
 record_speech();
