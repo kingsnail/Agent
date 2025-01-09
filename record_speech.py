@@ -30,7 +30,7 @@ def record_speech():
     # device index on this system
     device_index = 1
     # 44100 samples per second
-    sample_rate = 16000
+    sample_rate = 44100
     record_seconds = 10
     # initialize PyAudio object
     p = pyaudio.PyAudio()
