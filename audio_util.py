@@ -19,6 +19,7 @@ OP_SAMPLE_RATE = 24000
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 DEVICE_INDEX = 1
+OP_DEVICE_INDEX = 0
 
 # pyright: reportUnknownMemberType=false, reportUnknownVariableType=false, reportUnknownArgumentType=false
 
@@ -42,6 +43,7 @@ class AudioPlayerAsync:
             channels=CHANNELS,
             dtype=np.int16,
             blocksize=int(CHUNK_LENGTH_S * SAMPLE_RATE),
+            device=OP_DEVICE_INDEX,
         )
         self.playing = False
         self._frame_count = 0
