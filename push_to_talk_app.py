@@ -219,7 +219,7 @@ class RealtimeApp(App[None]):
             channels=CHANNELS,
             samplerate=SAMPLE_RATE,
             dtype="int16",
-            input_device_index=DEVICE_INDEX,
+            device=DEVICE_INDEX,
         )
         stream.start()
 
