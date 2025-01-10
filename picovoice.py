@@ -12,7 +12,7 @@ from   elevenlabslib import *
 
 ## Setup for Porcupine wakeword detection
 keywords_list      = ['picovoice', 'bumblebee']
-keyword_path_list  = ['Chatbot_en_raspberry-pi_v2_2_0.ppn']
+keyword_path_list  = ['Dumb-Ass_en_raspberry-pi_v3_0_0.ppn']
 keyword_path_names = ['Dumb Ass']
 
 porcupine = pvporcupine.create(
