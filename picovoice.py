@@ -5,7 +5,7 @@ import command_parser
 import os
 import openai
 from   elevenlabslib import *
-
+print("eleven_labs_user=", eleven_labs_user)
 ## Setup for Eleven Labs Speech Generation
 user_11labs = ElevenLabsUser(eleven_labs_user)
 voice       = user_11labs.get_voices_by_name("Rachel")[0]  # This is a list because multiple voices can have the same name
@@ -16,9 +16,9 @@ keyword_path_list  = ['Dumb-ass_en_windows_v2_2_0.ppn']
 keyword_path_names = ['Dumb Ass']
 
 porcupine = pvporcupine.create(
-    access_key=porcupine_access_key,
-    #keywords=keywords_list,
-    keyword_paths=keyword_path_list
+    access_key   = porcupine_access_key,
+    #keywords    = keywords_list,
+    keyword_paths= keyword_path_list
 )
 
 ## Create the recorder for Porcupine
