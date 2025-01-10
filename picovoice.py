@@ -1,3 +1,4 @@
+print("picovoice.py")
 import pvporcupine
 from   pvrecorder import PvRecorder
 import record_speech
