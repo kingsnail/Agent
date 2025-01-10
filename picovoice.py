@@ -35,7 +35,7 @@ try:
     recorder.start()
   
     while True:
-        print("reading...")
+        #print("reading...")
         keyword_index = porcupine.process(recorder.read())
         if keyword_index >= 0:
             print(f"Detected {keyword_path_names[keyword_index]}")
