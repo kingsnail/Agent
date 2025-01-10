@@ -13,6 +13,7 @@ elevenlabs_user       = os.getenv("ELEVENLABS_USER")
 elevenlabs_api_key    = os.getenv("ELEVENLABS_API_KEY")
 elevenlabs_voice_1_id = os.getenv("ELEVENLABS_VOICE_1_ID")
 porcupine_access_key  = os.getenv("PORCUPINE_ACCESS_KEY")
+gmail_password        = os.getenv("GMAIL_PASSWORD")
 
 print("Starting...");
 #record_speech.record_speech();
