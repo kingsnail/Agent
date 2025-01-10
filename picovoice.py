@@ -4,6 +4,7 @@ from   pvrecorder import PvRecorder
 import record_speech
 import command_parser
 import os
+import time
 import openai
 from elevenlabs.client import ElevenLabs
 from elevenlabs import stream
