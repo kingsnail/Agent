@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import os
 
 # Load the .env file
+print("Loading environment variables...")
 load_dotenv()
 
 # Access the environment variables
@@ -14,6 +15,7 @@ porcupine_access_key  = os.getenv("PORCUPINE_ACCESS_KEY")
 gmail_password        = os.getenv("GMAIL_PASSWORD")
 
 # Imports that rely on dotenv data
+print("Performing dependent imports...")
 import record_speech
 import picovoice
 
