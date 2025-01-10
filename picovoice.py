@@ -16,7 +16,7 @@ keyword_path_list  = ['Dumb-ass_en_windows_v2_2_0.ppn']
 keyword_path_names = ['Dumb Ass']
 
 porcupine = pvporcupine.create(
-    access_key   = porcupine_access_key,
+    access_key   = os.getenv("PORCUPINE_ACCESS_KEY"),
     #keywords    = keywords_list,
     keyword_paths= keyword_path_list
 )
