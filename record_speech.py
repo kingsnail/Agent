@@ -33,6 +33,7 @@ def record_speech():
     sample_rate = 48000
     record_seconds = 10
     # initialize PyAudio object
+    print("Instantiate PyAudio...")
     p = pyaudio.PyAudio()
     # open stream object as input & output
     print("Openning Stream...")
@@ -40,7 +41,7 @@ def record_speech():
                     channels=channels,
                     rate=sample_rate,
                     input=True,
-                    output=True,
+                    output=False,
                     frames_per_buffer=chunk,
                     input_device_index=device_index)
     print("Stream Open...")
