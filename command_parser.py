@@ -1,3 +1,4 @@
+print ("command_parser.py")
 import openai
 import re
 import json
