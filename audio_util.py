@@ -17,6 +17,7 @@ CHUNK_LENGTH_S = 0.05  # 100ms
 SAMPLE_RATE = 24000
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
+DEVICE_INDEX = 1
 
 # pyright: reportUnknownMemberType=false, reportUnknownVariableType=false, reportUnknownArgumentType=false
 
@@ -108,6 +109,7 @@ async def send_audio_worker_sounddevice(
         channels=CHANNELS,
         samplerate=SAMPLE_RATE,
         dtype="int16",
+        input_device_index=DEVICE_INDEX
     )
     stream.start()
 
