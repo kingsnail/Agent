@@ -1,13 +1,14 @@
 print ("command_parser.py")
 import openai
+import os
 import re
 import json
 
 import mail_utils
 
 ## Setup for OpenAI
-openai.api_key      = openai_api_key
-openai.organization = openai_organization
+openai.api_key      = os.getenv("OPENAI_API_KEY")
+openai.organization = os.getenv("OPENAI_ORG")
 request_model       = "gpt-3.5-turbo" #"text-davinci-003""gpt-3.5-turbo"
 request_max_tokens  = 500
 
