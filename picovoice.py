@@ -7,8 +7,8 @@ import os
 import openai
 from   elevenlabslib import *
 ## Setup for Eleven Labs Speech Generation
-user_11labs = ElevenLabsUser(os.getenv("ELEVEN_LABS_USER"))
-voice       = user_11labs.get_voices_by_name("Rachel")[0]  # This is a list because multiple voices can have the same name
+##user_11labs = ElevenLabsUser(os.getenv("ELEVEN_LABS_USER"))
+##voice       = user_11labs.get_voices_by_name("Rachel")[0]  # This is a list because multiple voices can have the same name
 
 ## Setup for Porcupine wakeword detection
 keywords_list      = ['picovoice', 'bumblebee']
@@ -53,7 +53,7 @@ try:
                 # Now decode the transcript to work out what action is to be taken.
                 r, exit_flag = command_parser.parse_command(transcript.text)       
                 print("Command response was : ", r)
-                voice.generate_and_play_audio(r, playInBackground=False)
+                ##voice.generate_and_play_audio(r, playInBackground=False)
                 if exit_flag:
                     working = False
                 else:                    
