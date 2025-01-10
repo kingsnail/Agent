@@ -15,6 +15,7 @@ from openai.resources.beta.realtime.realtime import AsyncRealtimeConnection
 
 CHUNK_LENGTH_S = 0.05  # 100ms
 SAMPLE_RATE = 48000
+OP_SAMPLE_RATE = 24000
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 DEVICE_INDEX = 1
@@ -37,7 +38,7 @@ class AudioPlayerAsync:
         self.lock = threading.Lock()
         self.stream = sd.OutputStream(
             callback=self.callback,
-            samplerate=SAMPLE_RATE,
+            samplerate=OP_SAMPLE_RATE,
             channels=CHANNELS,
             dtype=np.int16,
             blocksize=int(CHUNK_LENGTH_S * SAMPLE_RATE),
