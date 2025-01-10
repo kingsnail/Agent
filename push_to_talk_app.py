@@ -23,6 +23,9 @@
 # ///
 from __future__ import annotations
 
+from dotenv import load_dotenv
+import os
+
 import base64
 import asyncio
 from typing import Any, cast
@@ -275,7 +278,9 @@ class RealtimeApp(App[None]):
                 self.should_send_audio.set()
                 status_indicator.is_recording = True
 
-
 if __name__ == "__main__":
+# Load the .env file
+    print("Loading environment variables...")
+    load_dotenv()
     app = RealtimeApp()
     app.run()
