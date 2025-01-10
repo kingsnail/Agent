@@ -17,8 +17,8 @@ gmail_password        = os.getenv("GMAIL_PASSWORD")
 # Imports that rely on dotenv data
 print("Performing dependent imports...")
 import record_speech
-import picovoice
+#import picovoice
 
 print("Starting...");
-#record_speech.record_speech();
+record_speech.record_speech();
 print("Complete.");
