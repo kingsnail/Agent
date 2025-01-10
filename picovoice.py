@@ -6,9 +6,8 @@ import command_parser
 import os
 import openai
 from   elevenlabslib import *
-print("eleven_labs_user=", eleven_labs_user)
 ## Setup for Eleven Labs Speech Generation
-user_11labs = ElevenLabsUser(eleven_labs_user)
+user_11labs = ElevenLabsUser(os.getenv("ELEVEN_LABS_USER")
 voice       = user_11labs.get_voices_by_name("Rachel")[0]  # This is a list because multiple voices can have the same name
 
 ## Setup for Porcupine wakeword detection
