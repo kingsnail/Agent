@@ -33,12 +33,13 @@ recorder = PvRecorder(device_index=-1,
 try:
     print("Listening...")
     recorder.start()
- 
+  
     while True:
         keyword_index = porcupine.process(recorder.read())
         if keyword_index >= 0:
             print(f"Detected {keyword_path_names[keyword_index]}")
             recorder.stop()
+            recorder.delete()
             
             ## The keyword has been recognized. So now we are awake, capture speech.
             working = True
@@ -67,6 +68,7 @@ try:
                     working = False
                 else:                    
                     print("Next...")
+            recorder = PvRecorder(device_index=-1, frame_length=porcupine.frame_length)
             recorder.start()
 except KeyboardInterrupt:
     recorder.stop()
