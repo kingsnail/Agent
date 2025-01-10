@@ -32,7 +32,7 @@ from typing import Any, cast
 from typing_extensions import override
 
 from textual import events
-from audio_util import CHANNELS, SAMPLE_RATE, AudioPlayerAsync
+from audio_util import CHANNELS, SAMPLE_RATE, DEVICE_INDEX, AudioPlayerAsync
 from textual.app import App, ComposeResult
 from textual.widgets import Button, Static, RichLog
 from textual.reactive import reactive
@@ -219,6 +219,7 @@ class RealtimeApp(App[None]):
             channels=CHANNELS,
             samplerate=SAMPLE_RATE,
             dtype="int16",
+            input_device_index=DEVICE_INDEX,
         )
         stream.start()
 
