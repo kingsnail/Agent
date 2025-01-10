@@ -18,7 +18,7 @@ def get_max(d):
     
 
 def record_speech():
-
+    print("Recording speech...")
     # the file name output you want to record into
     filename = "speech.wav"
     # set the chunk size of 1024 samples
@@ -35,6 +35,7 @@ def record_speech():
     # initialize PyAudio object
     p = pyaudio.PyAudio()
     # open stream object as input & output
+    print("Openning Stream...")
     stream = p.open(format=FORMAT,
                     channels=channels,
                     rate=sample_rate,
@@ -42,6 +43,7 @@ def record_speech():
                     output=True,
                     frames_per_buffer=chunk,
                     input_device_index=device_index)
+    print("Stream Open...")
     frames = []
     try:
         s_count   = 0
