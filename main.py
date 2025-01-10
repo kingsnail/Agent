@@ -6,7 +6,7 @@ print("Loading environment variables...")
 load_dotenv()
 
 # Access the environment variables
-openai_irganization   = os.getenv("OPENAI_ORG")
+openai_organization   = os.getenv("OPENAI_ORG")
 openai_api_key        = os.getenv("OPENAI_API_KEY")
 elevenlabs_user       = os.getenv("ELEVENLABS_USER")
 elevenlabs_api_key    = os.getenv("ELEVENLABS_API_KEY")
