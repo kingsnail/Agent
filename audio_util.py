@@ -43,7 +43,7 @@ class AudioPlayerAsync:
             channels=CHANNELS,
             dtype=np.int16,
             blocksize=int(CHUNK_LENGTH_S * SAMPLE_RATE),
-            device=OP_DEVICE_INDEX,
+            #device=OP_DEVICE_INDEX,
         )
         self.playing = False
         self._frame_count = 0
@@ -112,7 +112,7 @@ async def send_audio_worker_sounddevice(
         channels=CHANNELS,
         samplerate=SAMPLE_RATE,
         dtype="int16",
-        input_device_index=DEVICE_INDEX
+        #input_device_index=DEVICE_INDEX
     )
     stream.start()
 
