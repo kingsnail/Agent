@@ -5,9 +5,13 @@ import record_speech
 import command_parser
 import os
 import openai
-from   elevenlabslib import *
+from elevenlabs.client import ElevenLabs
+from elevenlabs import stream
+
 ## Setup for Eleven Labs Speech Generation
-##user_11labs = ElevenLabsUser(os.getenv("ELEVEN_LABS_USER"))
+tts_client = ElevenLabs(
+  api_key=os.getenv("ELEVENLABS_API_KEY"), 
+)
 ##voice       = user_11labs.get_voices_by_name("Rachel")[0]  # This is a list because multiple voices can have the same name
 
 ## Setup for Porcupine wakeword detection
@@ -53,7 +57,12 @@ try:
                 # Now decode the transcript to work out what action is to be taken.
                 r, exit_flag = command_parser.parse_command(transcript.text)       
                 print("Command response was : ", r)
-                ##voice.generate_and_play_audio(r, playInBackground=False)
+                audio_stream = tts_client.generate(
+                    text="This is a... streaming voice!!",
+                    stream=True
+                    )
+
+                stream(audio_stream)
                 if exit_flag:
                     working = False
                 else:                    
