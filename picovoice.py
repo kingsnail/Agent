@@ -42,6 +42,7 @@ try:
             recorder.stop()
             recorder.delete()
             print("Recorder deleted.")
+            time.sleep(5)
             ## The keyword has been recognized. So now we are awake, capture speech.
             working = True
             while working:
