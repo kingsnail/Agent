@@ -114,13 +114,13 @@ class RealtimeApp():
                     asyncio.create_task(connection.send({"type": "response.cancel"}))
                     sent_audio = True
 
-                print("appending buffer")
                 await connection.input_audio_buffer.append(audio=base64.b64encode(cast(Any, data)).decode("utf-8"))
 
                 await asyncio.sleep(0)
         except KeyboardInterrupt:
             pass
         finally:
+            print("Stop recorder.")
             stream.stop()
             stream.close()
 
