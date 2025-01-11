@@ -28,7 +28,7 @@ class RealtimeApp():
     def run(self) -> None:
         print("Run() called.")
         
-async def handle_realtime_connection(self) -> None:
+    async def handle_realtime_connection(self) -> None:
         async with self.client.beta.realtime.connect(model="gpt-4o-realtime-preview-2024-10-01") as conn:
             self.connection = conn
             self.connected.set()
