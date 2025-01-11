@@ -5,6 +5,7 @@ import asyncio
 from   openai import AsyncOpenAI
 from   openai.types.beta.realtime.session import Session
 from   openai.resources.beta.realtime.realtime import AsyncRealtimeConnection
+from typing import Any, cast
 
 class RealtimeApp():
 
