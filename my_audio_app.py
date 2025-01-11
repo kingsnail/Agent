@@ -28,12 +28,7 @@ class RealtimeApp():
 
     async def run(self) -> None:
         print("run() called.")
-        connection_handler = self.handle_realtime_connection()
-        print("connection_handler started")
-        microphone_handler = self.send_mic_audio()
-        print("microphone handler started")
-        await microphone_handler
-        await connection_handler
+        result = await asyncio.gather(self.handle_realtime_connection(), self.send_mic_audio())
         print("run() completed.")
         
     async def handle_realtime_connection(self) -> None:
@@ -83,7 +78,8 @@ class RealtimeApp():
         sent_audio = False
 
         device_info = sd.query_devices()
-        print("device_info=",device_info)
+        print("device_info:)
+        print(device_info)
 
         read_size = int(self.SAMPLE_RATE * 0.02)
 
