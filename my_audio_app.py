@@ -43,9 +43,8 @@ class RealtimeApp():
                 print("event.type=", event.type);
                 if event.type == "session.created":
                     self.session = event.session
-                    session_display = self.query_one(SessionDisplay)
                     assert event.session.id is not None
-                    session_display.session_id = event.session.id
+                    print("session_id=",event.session_id)
                     continue
 
                 if event.type == "session.updated":
@@ -68,11 +67,6 @@ class RealtimeApp():
                         acc_items[event.item_id] = event.delta
                     else:
                         acc_items[event.item_id] = text + event.delta
-
-                    # Clear and update the entire content because RichLog otherwise treats each delta as a new line
-                    bottom_pane = self.query_one("#bottom-pane", RichLog)
-                    bottom_pane.clear()
-                    bottom_pane.write(acc_items[event.item_id])
                     continue
 
 
