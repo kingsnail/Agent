@@ -109,7 +109,6 @@ class RealtimeApp():
         try:
             while True:
                 if stream.read_available < read_size:
-                    print("waiting")
                     await asyncio.sleep(0)
                     continue
 
