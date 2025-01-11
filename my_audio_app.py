@@ -10,7 +10,7 @@ class RealtimeApp():
 
     client:             AsyncOpenAI
     should_send_audio:  asyncio.Event
-    audio_player:       AudioPlayerAsync
+    ##audio_player:       AudioPlayerAsync
     last_audio_item_id: str | None
     connection:         AsyncRealtimeConnection | None
     session:            Session | None
