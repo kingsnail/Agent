@@ -48,7 +48,7 @@ class RealtimeApp():
                 if event.type == "session.created":
                     self.session = event.session
                     assert event.session.id is not None
-                    print("session_id=",event.session_id)
+                    print("session_id=",event.session.id)
                     continue
 
                 if event.type == "session.updated":
