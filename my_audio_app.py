@@ -48,6 +48,7 @@ class RealtimeApp():
                     self.session = event.session
                     assert event.session.id is not None
                     print("session_id=",event.session.id)
+                    self.should_send_audio.set()
                     continue
 
                 if event.type == "session.updated":
