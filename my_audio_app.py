@@ -89,10 +89,12 @@ class RealtimeApp():
 
         sent_audio = True
 
-        device_info = sd.query_devices()
+        sd.default.device = (1,0)
+        device_info       = sd.query_devices()
         print("device_info:")
         print(device_info)
-
+      
+        
         read_size = int(self.SAMPLE_RATE * 0.02)
 
         stream = sd.InputStream(
