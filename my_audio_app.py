@@ -29,7 +29,10 @@ class RealtimeApp():
         print("run() called.")
         connection_handler = self.handle_realtime_connection()
         print("connection_handler started")
+        microphone_handler = self.send_mic_audo()
+        print("microphone handler started")
         await connection_handler
+        await microphone_handler
         print("run() completed.")
         
     async def handle_realtime_connection(self) -> None:
@@ -72,6 +75,52 @@ class RealtimeApp():
                     else:
                         acc_items[event.item_id] = text + event.delta
                     continue
+
+    async def send_mic_audio(self) -> None:
+        import sounddevice as sd  # type: ignore
+
+        sent_audio = False
+
+        device_info = sd.query_devices()
+        print("device_info=",device_info)
+
+        read_size = int(SAMPLE_RATE * 0.02)
+
+        stream = sd.InputStream(
+            channels=CHANNELS,
+            samplerate=SAMPLE_RATE,
+            dtype="int16",
+            #device=DEVICE_INDEX,
+        )
+        stream.start()
+
+        status_indicator = self.query_one(AudioStatusIndicator)
+
+        try:
+            while True:
+                if stream.read_available < read_size:
+                    await asyncio.sleep(0)
+                    continue
+
+                await self.should_send_audio.wait()
+                status_indicator.is_recording = True
+
+                data, _ = stream.read(read_size)
+
+                connection = await self._get_connection()
+                if not sent_audio:
+                    asyncio.create_task(connection.send({"type": "response.cancel"}))
+                    sent_audio = True
+
+                await connection.input_audio_buffer.append(audio=base64.b64encode(cast(Any, data)).decode("utf-8"))
+
+                await asyncio.sleep(0)
+        except KeyboardInterrupt:
+            pass
+        finally:
+            stream.stop()
+            stream.close()
+
 
 async def main():
     print("Start.")
