@@ -26,9 +26,11 @@ class RealtimeApp():
         self.connected = asyncio.Event()
 
     def run(self) -> None:
-        print("Run() called.")
+        print("run() called.")
         connection_handler = self.handle_realtime_connection()
         print("connection_handler started")
+        await connection_handler
+        print("run() completed.")
         
     async def handle_realtime_connection(self) -> None:
         async with self.client.beta.realtime.connect(model="gpt-4o-realtime-preview-2024-10-01") as conn:
