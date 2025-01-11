@@ -73,12 +73,14 @@ class RealtimeApp():
                         acc_items[event.item_id] = text + event.delta
                     continue
 
+async def main():
+    print("Start.")
+    load_dotenv()
+    print("Environment loaded.")
+    myRealtimeApp = RealtimeApp();
+    print("Ready to run.")
+    task = myRealtimeApp.run()
+    await task
+    print("End.")
 
-print("Start.")
-load_dotenv()
-print("Environment loaded.")
-myRealtimeApp = RealtimeApp();
-print("Ready to run.")
-task = myRealtimeApp.run()
-await task
-print("End.")
+asyncio.run(main)
