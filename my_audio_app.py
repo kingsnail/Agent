@@ -27,7 +27,7 @@ class RealtimeApp():
 
     def run(self) -> None:
         print("Run() called.")
-        connection_handler = handle_realtime_connection()
+        connection_handler = self.handle_realtime_connection()
         print("connection_handler started")
         
     async def handle_realtime_connection(self) -> None:
