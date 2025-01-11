@@ -101,7 +101,9 @@ class RealtimeApp():
                     await asyncio.sleep(0)
                     continue
 
+                print("await send audio.")
                 await self.should_send_audio.wait()
+                print("proceed send audio.")
                 status_indicator.is_recording = True
 
                 data, _ = stream.read(read_size)
