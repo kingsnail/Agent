@@ -83,10 +83,12 @@ class AudioPlayerAsync:
                 self.start()
 
     def start(self):
+        print("audio: start()")
         self.playing = True
         self.stream.start()
 
     def stop(self):
+        print("audio: stop()")
         self.playing = False
         self.stream.stop()
         with self.lock:
