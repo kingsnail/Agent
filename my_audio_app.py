@@ -31,8 +31,8 @@ class RealtimeApp():
         print("connection_handler started")
         microphone_handler = self.send_mic_audio()
         print("microphone handler started")
-        await connection_handler
         await microphone_handler
+        await connection_handler
         print("run() completed.")
         
     async def handle_realtime_connection(self) -> None:
