@@ -95,8 +95,6 @@ class RealtimeApp():
         )
         stream.start()
 
-        status_indicator = self.query_one(AudioStatusIndicator)
-
         try:
             while True:
                 if stream.read_available < read_size:
