@@ -96,7 +96,8 @@ class RealtimeApp():
       
         
         read_size = int(self.SAMPLE_RATE * 0.02)
-
+        print("read_size=",read_size)
+        
         stream = sd.InputStream(
             channels=1,
             samplerate=self.SAMPLE_RATE,
@@ -108,6 +109,7 @@ class RealtimeApp():
         try:
             while True:
                 if stream.read_available < read_size:
+                    print("waiting")
                     await asyncio.sleep(0)
                     continue
 
@@ -121,6 +123,7 @@ class RealtimeApp():
                     asyncio.create_task(connection.send({"type": "response.cancel"}))
                     sent_audio = True
 
+                print("sending")
                 await connection.input_audio_buffer.append(audio=base64.b64encode(cast(Any, data)).decode("utf-8"))
 
                 await asyncio.sleep(0)
