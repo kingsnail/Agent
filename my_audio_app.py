@@ -24,6 +24,8 @@ class RealtimeApp():
         self.last_audio_item_id = None
         self.should_send_audio  = asyncio.Event()
         self.connected = asyncio.Event()
+
+
 print("Start.")
 load_dotenv()
 print("Environment loaded.")
