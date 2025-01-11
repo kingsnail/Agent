@@ -79,5 +79,6 @@ load_dotenv()
 print("Environment loaded.")
 myRealtimeApp = RealtimeApp();
 print("Ready to run.")
-myRealtimeApp.run()
+task = myRealtimeApp.run()
+await task
 print("End.")
