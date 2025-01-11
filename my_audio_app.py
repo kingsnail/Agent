@@ -25,11 +25,60 @@ class RealtimeApp():
         self.should_send_audio  = asyncio.Event()
         self.connected = asyncio.Event()
 
+    def run(self) -> None:
+        print("Run() called.")
+        
+async def handle_realtime_connection(self) -> None:
+        async with self.client.beta.realtime.connect(model="gpt-4o-realtime-preview-2024-10-01") as conn:
+            self.connection = conn
+            self.connected.set()
+
+            # note: this is the default and can be omitted
+            # if you want to manually handle VAD yourself, then set `'turn_detection': None`
+            await conn.session.update(session={"turn_detection": {"type": "server_vad"}})
+
+            acc_items: dict[str, Any] = {}
+
+            async for event in conn:
+                if event.type == "session.created":
+                    self.session = event.session
+                    session_display = self.query_one(SessionDisplay)
+                    assert event.session.id is not None
+                    session_display.session_id = event.session.id
+                    continue
+
+                if event.type == "session.updated":
+                    self.session = event.session
+                    continue
+
+                if event.type == "response.audio.delta":
+                    if event.item_id != self.last_audio_item_id:
+                        self.audio_player.reset_frame_count()
+                        self.last_audio_item_id = event.item_id
+
+                    bytes_data = base64.b64decode(event.delta)
+                    self.audio_player.add_data(bytes_data)
+                    continue
+
+                if event.type == "response.audio_transcript.delta":
+                    try:
+                        text = acc_items[event.item_id]
+                    except KeyError:
+                        acc_items[event.item_id] = event.delta
+                    else:
+                        acc_items[event.item_id] = text + event.delta
+
+                    # Clear and update the entire content because RichLog otherwise treats each delta as a new line
+                    bottom_pane = self.query_one("#bottom-pane", RichLog)
+                    bottom_pane.clear()
+                    bottom_pane.write(acc_items[event.item_id])
+                    continue
+
 
 print("Start.")
 load_dotenv()
 print("Environment loaded.")
 myRealtimeApp = RealtimeApp();
 print("Ready to run.")
-
+myRealtimeApp.run()
 print("End.")
