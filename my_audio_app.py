@@ -6,12 +6,13 @@ from   openai import AsyncOpenAI
 from   openai.types.beta.realtime.session import Session
 from   openai.resources.beta.realtime.realtime import AsyncRealtimeConnection
 from typing import Any, cast
+from audio_util import AudioPlayerAsync
 
 class RealtimeApp():
 
     client:             AsyncOpenAI
     should_send_audio:  asyncio.Event
-    ##audio_player:       AudioPlayerAsync
+    audio_player:       AudioPlayerAsync
     last_audio_item_id: str | None
     connection:         AsyncRealtimeConnection | None
     session:            Session | None
@@ -21,7 +22,7 @@ class RealtimeApp():
         self.connection          = None
         self.session             = None
         self.client              = AsyncOpenAI()
-        #self.audio_player       = AudioPlayerAsync()
+        self.audio_player       = AudioPlayerAsync()
         self.last_audio_item_id  = None
         self.should_send_audio   = asyncio.Event()
         self.connected           = asyncio.Event()
@@ -73,6 +74,7 @@ class RealtimeApp():
                     else:
                         acc_items[event.item_id] = text + event.delta
                     continue
+                    
                 if event.type == "error":
                     print("event=", event)
                     continue
