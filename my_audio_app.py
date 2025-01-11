@@ -20,13 +20,14 @@ class RealtimeApp():
         self.connection         = None
         self.session            = None
         self.client             = AsyncOpenAI()
-        self.audio_player       = AudioPlayerAsync()
+        #self.audio_player       = AudioPlayerAsync()
         self.last_audio_item_id = None
         self.should_send_audio  = asyncio.Event()
         self.connected = asyncio.Event()
-print("Start...")
+print("Start.")
 load_dotenv()
-print("Environment loaded")
-myRealtimeApp: RealtimeApp();
+print("Environment loaded.")
+myRealtimeApp = RealtimeApp();
+print("Ready to run.")
 
 print("End.")
