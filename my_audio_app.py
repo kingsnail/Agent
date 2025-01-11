@@ -85,7 +85,7 @@ class RealtimeApp():
     async def send_mic_audio(self) -> None:
         import sounddevice as sd  # type: ignore
 
-        sent_audio = False
+        sent_audio = True
 
         device_info = sd.query_devices()
         print("device_info:")
