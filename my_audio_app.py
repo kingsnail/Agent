@@ -25,7 +25,7 @@ class RealtimeApp():
         self.should_send_audio  = asyncio.Event()
         self.connected = asyncio.Event()
 
-    def run(self) -> None:
+    async def run(self) -> None:
         print("run() called.")
         connection_handler = self.handle_realtime_connection()
         print("connection_handler started")
