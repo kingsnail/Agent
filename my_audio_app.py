@@ -40,6 +40,7 @@ class RealtimeApp():
             acc_items: dict[str, Any] = {}
 
             async for event in conn:
+                print("event.type=", event.type);
                 if event.type == "session.created":
                     self.session = event.session
                     session_display = self.query_one(SessionDisplay)
