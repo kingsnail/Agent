@@ -104,17 +104,17 @@ class RealtimeApp():
                     await asyncio.sleep(0)
                     continue
 
-                print("await send audio.")
                 await self.should_send_audio.wait()
-                print("proceed send audio.")
 
                 data, _ = stream.read(read_size)
 
                 connection = await self._get_connection()
                 if not sent_audio:
+                    print("sending cancel...")
                     asyncio.create_task(connection.send({"type": "response.cancel"}))
                     sent_audio = True
 
+                print("appending buffer")
                 await connection.input_audio_buffer.append(audio=base64.b64encode(cast(Any, data)).decode("utf-8"))
 
                 await asyncio.sleep(0)
