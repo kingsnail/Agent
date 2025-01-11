@@ -73,6 +73,9 @@ class RealtimeApp():
                     else:
                         acc_items[event.item_id] = text + event.delta
                     continue
+                if event.type == "error":
+                    print("event=", event)
+                    continue
     
     async def _get_connection(self) -> AsyncRealtimeConnection:
         await self.connected.wait()
