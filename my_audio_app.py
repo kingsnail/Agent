@@ -83,4 +83,4 @@ async def main():
     await task
     print("End.")
 
-asyncio.run(main)
+asyncio.run(main())
