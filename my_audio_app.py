@@ -15,15 +15,16 @@ class RealtimeApp():
     connection:         AsyncRealtimeConnection | None
     session:            Session | None
     connected:          asyncio.Event
-
+    
     def __init__(self) -> None:
-        self.connection         = None
-        self.session            = None
-        self.client             = AsyncOpenAI()
+        self.connection          = None
+        self.session             = None
+        self.client              = AsyncOpenAI()
         #self.audio_player       = AudioPlayerAsync()
-        self.last_audio_item_id = None
-        self.should_send_audio  = asyncio.Event()
-        self.connected = asyncio.Event()
+        self.last_audio_item_id  = None
+        self.should_send_audio   = asyncio.Event()
+        self.connected           = asyncio.Event()
+        self.SAMPLE_RATE         = 48000
 
     async def run(self) -> None:
         print("run() called.")
@@ -84,11 +85,11 @@ class RealtimeApp():
         device_info = sd.query_devices()
         print("device_info=",device_info)
 
-        read_size = int(SAMPLE_RATE * 0.02)
+        read_size = int(self.SAMPLE_RATE * 0.02)
 
         stream = sd.InputStream(
-            channels=CHANNELS,
-            samplerate=SAMPLE_RATE,
+            channels=1,
+            samplerate=self.SAMPLE_RATE,
             dtype="int16",
             #device=DEVICE_INDEX,
         )
