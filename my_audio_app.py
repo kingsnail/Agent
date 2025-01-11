@@ -72,7 +72,12 @@ class RealtimeApp():
                     else:
                         acc_items[event.item_id] = text + event.delta
                     continue
-
+    
+    async def _get_connection(self) -> AsyncRealtimeConnection:
+        await self.connected.wait()
+        assert self.connection is not None
+        return self.connection
+        
     async def send_mic_audio(self) -> None:
         import sounddevice as sd  # type: ignore
 
