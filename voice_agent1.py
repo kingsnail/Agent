@@ -22,6 +22,20 @@ SAMPLE_FORMAT      = pyaudio.paInt16
 CHANNELS           = 1                  # mono, change to 2 if you want stereo
 INPUT_DEVICE_INDEX = 1
 SAMPLE_RATE        = 48000
+
+THRESHOLD     = 500
+SILENT_CHUNKS = 100
+NOISY_CHUNKS  = 20
+
+def get_max(d):
+    m = 0
+    for i in range(0, len(d), 2):
+        b = d[i:i+2]
+        v = int.from_bytes(b, "little", signed="True")
+        #print(str(d[i]) + " + " + str(d[i+1]) + " = " + str(v))
+        if abs(v) > m:
+             m = abs(v)
+    return m
     
 # initialize PyAudio object
 print("Instantiate PyAudio...")
