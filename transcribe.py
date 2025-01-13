@@ -1,9 +1,14 @@
 #!/usr/bin/env rye run python
 
 import time
-from pathlib import Path
+from   pathlib import Path
+from   dotenv  import load_dotenv
+import os
+from   openai  import OpenAI
 
-from openai import OpenAI
+# Load the .env file
+print("Loading environment variables...")
+load_dotenv()
 
 # gets OPENAI_API_KEY from your environment variables
 openai = OpenAI()
