@@ -2,7 +2,8 @@ print("voice_agent.py")
 from dotenv import load_dotenv
 import os
 
-
+import pyaudio
+import wave
 import pvporcupine
 from   pvrecorder import PvRecorder
 import command_parser
