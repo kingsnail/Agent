@@ -34,16 +34,15 @@ from scipy.signal import resample_poly
 def downsample_48k_to_16k(raw_pcm_data):
     # Convert bytes to int16 array
     samples_48k = np.frombuffer(raw_pcm_data, dtype=np.int16)
-
-    # Use polyphase resampling: factor of 1/3 (48k -> 16k)
-    # "resample_poly" is quite good for audio
+    
+    # Downsample from 48k to 16k => factor of 1/3
     samples_16k = resample_poly(samples_48k, up=1, down=3)
-
-    # Convert back to int16 (watch out for rounding)
+    
+    # Convert to int16 to match what Porcupine expects
     samples_16k = samples_16k.astype(np.int16)
 
-    # Return bytes
-    return samples_16k.tobytes()
+    # Return as a NumPy array (Porcupine can process an array or list of ints)
+    return samples_16k
     
 def get_max(d):
     m = 0
@@ -87,9 +86,7 @@ try:
   
     while True:
         pcm = stream.read(porcupine.frame_length)        
-        # Convert bytes to 16-bit samples
-        audio_frame = struct.unpack_from("h" * porcupine.frame_length, pcm)
-        data16k = downsample_48k_to_16k(audio_frame)
+        data16k = downsample_48k_to_16k(pcm)
         # Process the audio frame with Porcupine
         keyword_index = porcupine.process(data16k)
 
