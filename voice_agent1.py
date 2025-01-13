@@ -15,7 +15,22 @@ from   openai import OpenAI
 print("Loading environment variables...")
 load_dotenv()
 
+# the file name output you want to record into
+SPEECH_FILE_NAME   = "speech.wav"
+CHUNK              = 1024
+SAMPLE_FORMAT      = pyaudio.paInt16
+CHANNELS           = 1                  # mono, change to 2 if you want stereo
+INPUT_DEVICE_INDEX = 1
+SAMPLE_RATE        = 48000
+    
+# initialize PyAudio object
+print("Instantiate PyAudio...")
+p = pyaudio.PyAudio()
+
+print("Initialize OpenAI API...")
 openai = OpenAI()
+
+print("Initialize PicoVoice...")
 ## Setup for Porcupine wakeword detection
 keywords_list      = ['picovoice', 'bumblebee']
 keyword_path_list  = ['Dumb-Ass_en_raspberry-pi_v3_0_0.ppn']
@@ -48,7 +63,14 @@ try:
             ## The keyword has been recognized. So now we are awake, capture speech.
             working = True
             while working:
-                record_speech.record_speech()
+                ## Now record the speech that follows the wake word...
+                #record_speech.record_speech()
+
+
+
+
+                
+                ## Transcribe the captured text
                 print("Transcribing...")
                 audio_file = open("speech.wav", "rb")
 
