@@ -51,13 +51,15 @@ try:
                 record_speech.record_speech()
                 print("Transcribing...")
                 audio_file = open("speech.wav", "rb")
-                transcript = openai.Audio.transcribe(model = "whisper-1", 
-                                                     file   = audio_file,
-                                                     temperature = 0.0,
-                                                     language    = "en"
-                                                     )
+
+                # Create transcription from audio file into English
+                transcription = openai.audio.transcriptions.create(
+                                    model    = "whisper-1",
+                                    file     = audio_file,
+                                    language = "en",
+                                    )
                 print("You said:")
-                print(transcript.text)
+                print(transcription.text)
                 
                 # Now decode the transcript to work out what action is to be taken.
                 r, exit_flag = command_parser.parse_command(transcript.text)       
