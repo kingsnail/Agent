@@ -105,7 +105,7 @@ try:
                    recording = True
                    appending = False
                    while(recording):
-                       data = stream.read(chunk)
+                       data = stream.read(CHUNK)
                        # Detect a silent frame
                        if get_max(data) < THRESHOLD:
                           s_count += 1
@@ -143,7 +143,7 @@ try:
 
                 ## Transcribe the captured text
                 print("Transcribing...")
-                audio_file = open("speech.wav", "rb")
+                audio_file = open(SPEECH_FILE_NAME, "rb")
 
                 # Create transcription from audio file into English
                 transcription = openai.audio.transcriptions.create(
