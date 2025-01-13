@@ -21,7 +21,7 @@ CHUNK              = 1024
 SAMPLE_FORMAT      = pyaudio.paInt16
 CHANNELS           = 1                  # mono, change to 2 if you want stereo
 INPUT_DEVICE_INDEX = 1
-SAMPLE_RATE        = 48000
+SAMPLE_RATE        = 16000
 
 THRESHOLD     = 500
 SILENT_CHUNKS = 100
@@ -58,7 +58,6 @@ porcupine = pvporcupine.create(
 
 try:
     print("Listening...")
-    print("Openning Recording Stream...")
     stream = p.open(format            = SAMPLE_FORMAT,
                     channels           = CHANNELS,
                     rate               = SAMPLE_RATE,
