@@ -18,7 +18,7 @@ speech_file_path = Path(__file__).parent / "speech.mp3"
 
 def main() -> None:
     print("Starting")
-    stream_to_speakers()
+    stream_to_speakers("The audio stream is working.")
 
     # Create text-to-speech audio file
     #with openai.audio.speech.with_streaming_response.create(
@@ -28,7 +28,7 @@ def main() -> None:
     #) as response:
     #    response.stream_to_file(speech_file_path)
 
-    # Create transcription from audio file
+    # Create transcription from audio file into English
     #transcription = openai.audio.transcriptions.create(
     #    model="whisper-1",
     #    file=speech_file_path,
@@ -43,7 +43,7 @@ def main() -> None:
     #print(translation.text)
 
 
-def stream_to_speakers() -> None:
+def stream_to_speakers( text = "No stream text supplied.") -> None:
     import pyaudio
     p = pyaudio.PyAudio()
     for i in range(p.get_device_count()):
@@ -65,10 +65,7 @@ def stream_to_speakers() -> None:
         model="tts-1",
         voice="alloy",
         response_format="pcm",  # similar to WAV, but without a header chunk at the start.
-        input="""I see skies of blue and clouds of white
-                The bright blessed days, the dark sacred nights
-                And I think to myself
-                What a wonderful world""",
+        input=text,
     ) as response:
         print(f"Time to first byte: {int((time.time() - start_time) * 1000)}ms")
         for chunk in response.iter_bytes(chunk_size=2048):
