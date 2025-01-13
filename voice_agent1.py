@@ -112,6 +112,8 @@ try:
                    n_count   = 0
                    recording = True
                    appending = False
+                   if stream.is_active() == False:
+                       stream.start_stream()
                    while(recording):
                        data = stream.read(CHUNK)
                        # Detect a silent frame
