@@ -55,7 +55,7 @@ def stream_to_speakers() -> None:
         
     player_stream = p.open(format=pyaudio.paInt16, 
                            channels=1, 
-                           rate=44100, 
+                           rate=24000, 
                            output=True,
                            output_device_index=0)
 
