@@ -44,7 +44,8 @@ def main() -> None:
 
 def stream_to_speakers() -> None:
     import pyaudio
-
+    devices = pyaudio.get_devices_by_index()
+    
     player_stream = pyaudio.PyAudio().open(format=pyaudio.paInt16, 
                                            channels=1, 
                                            rate=24000, 
