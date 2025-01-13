@@ -85,7 +85,7 @@ try:
     print("Stream Open...")
   
     while True:
-        pcm = stream.read(porcupine.frame_length)        
+        pcm = stream.read(porcupine.frame_length * 3)        
         data16k = downsample_48k_to_16k(pcm)
         # Process the audio frame with Porcupine
         keyword_index = porcupine.process(data16k)
