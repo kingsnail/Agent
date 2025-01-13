@@ -199,7 +199,10 @@ try:
                 else:                    
                     print("Next...")
 except KeyboardInterrupt:
-    recorder.stop()
+    if player_stream.is_active():
+        player_stream.stop_stream()
+    if stream.is_active():
+        stream.stop_stream()
 except Exception as e: 
     print("Something went wrong: ")
     print(e)
