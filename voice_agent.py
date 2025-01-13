@@ -10,9 +10,9 @@ from elevenlabs.client import ElevenLabs
 from elevenlabs import stream
 
 ## Setup for Eleven Labs Speech Generation
-tts_client = ElevenLabs(
-  api_key=os.getenv("ELEVENLABS_API_KEY"), 
-)
+##tts_client = ElevenLabs(
+##  api_key=os.getenv("ELEVENLABS_API_KEY"),
+##)
 ##voice       = user_11labs.get_voices_by_name("Rachel")[0]  # This is a list because multiple voices can have the same name
 
 ## Setup for Porcupine wakeword detection
