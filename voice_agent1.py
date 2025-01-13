@@ -24,9 +24,9 @@ INPUT_DEVICE_INDEX  = 1
 OUTPUT_DEVICE_INDEX = 0
 SAMPLE_RATE         = 48000
 
-THRESHOLD     = 500
-SILENT_CHUNKS = 100
-NOISY_CHUNKS  = 20
+THRESHOLD     = 500  # Threshold value for silence in the input audio stream
+SILENT_CHUNKS = 100  # Number of chunks of silence needed to establish a pause
+NOISY_CHUNKS  = 20   # Minimum noisy chunks allowed
 
 
 import numpy as np
@@ -108,32 +108,33 @@ try:
 
                 frames = []
                 try:
-                   s_count   = 0
-                   n_count   = 0
-                   recording = True
-                   appending = False
-                   if stream.is_active() == False:
-                       stream.start_stream()
-                   while(recording):
-                       data = stream.read(CHUNK)
-                       # Detect a silent frame
-                       if get_max(data) < THRESHOLD:
-                          s_count += 1
-                          print("n_count=", str(n_count), ", s_count=", str(s_count))
-                          # Look for enough silent frames occuring AFTER a noisy period to stop recording
-                          if (s_count > SILENT_CHUNKS) and (n_count > NOISY_CHUNKS):
-                             recording = False
-                             print("Stopped recording.")
-                       else:
-                          # This is a noisy frame
-                          n_count  += 1
-                          s_count   = 0
-                          if not appending:
-                             print("Recording - press Ctrl-c to stop...")
-                             appending = True # Start adding to the recorded data now
-                          if appending:
-                             frames.append(data)
-       
+                    s_count   = 0
+                    n_count   = 0
+                    recording = True
+                    appending = False
+                    if stream.is_active() == False:
+                        stream.start_stream()
+                    while(recording):
+                        data = stream.read(CHUNK)
+                        # Detect a silent frame
+                        if get_max(data) < THRESHOLD:
+                           s_count += 1
+                           print("n_count=", str(n_count), ", s_count=", str(s_count))
+                           # Look for enough silent frames occuring AFTER a noisy period to stop recording
+                           if (s_count > SILENT_CHUNKS) and (n_count > NOISY_CHUNKS):
+                              recording = False
+                              print("Stopped recording.")
+                        else:
+                           # This is a noisy frame
+                           n_count  += 1
+                           s_count   = 0
+                           if not appending:
+                               print("Recording - press Ctrl-c to stop...")
+                               appending = True # Start adding to the recorded data now
+                           if appending:
+                               frames.append(data)
+                    print("n_count = ", n_count)
+                    print("s_count = ", s_count)
                 except KeyboardInterrupt:
                     print("Keyboard Interrupt.")
                 print("Finished recording.")
