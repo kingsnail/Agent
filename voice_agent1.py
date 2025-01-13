@@ -37,8 +37,8 @@ def get_max(d):
     return m
     
 # initialize PyAudio object
-#print("Instantiate PyAudio...")
-#p = pyaudio.PyAudio()
+print("Instantiate PyAudio...")
+p = pyaudio.PyAudio()
 
 print("Initialize OpenAI API...")
 openai = OpenAI()
@@ -160,6 +160,5 @@ except Exception as e:
     print(e)
 finally:
     porcupine.delete()
-    recorder.delete()
     print("Stopped.")
 
