@@ -5,7 +5,6 @@ import os
 import pyaudio
 import wave
 import pvporcupine
-from   pvrecorder import PvRecorder
 import command_parser
 import os
 import time
@@ -56,18 +55,25 @@ porcupine = pvporcupine.create(
     keyword_paths= keyword_path_list
 )
 
-## Create the recorder for Porcupine
-recorder = PvRecorder(device_index=1, 
-                      frame_length=porcupine.frame_length
-)
-
 try:
     print("Listening...")
-    recorder.start()
+    print("Openning Recording Stream...")
+    stream = p.open(format            = SAMPLE_FORMAT,
+                    channels           = CHANNELS,
+                    rate               = SAMPLE_RATE,
+                    input              = True,
+                    output             = False,
+                    frames_per_buffer  = CHUNK,
+                    input_device_index = INPUT_DEVICE_INDEX)
+    print("Stream Open...")
   
     while True:
-        #print("reading...")
-        keyword_index = porcupine.process(recorder.read())
+        pcm = stream.read(porcupine.frame_length)        
+        # Convert bytes to 16-bit samples
+        audio_frame = struct.unpack_from("h" * porcupine.frame_length, pcm)
+        # Process the audio frame with Porcupine
+        keyword_index = porcupine.process(audio_frame)
+
         if keyword_index >= 0:
             print(f"Detected {keyword_path_names[keyword_index]}")
             recorder.stop()
@@ -80,15 +86,6 @@ try:
                 ## Now record the speech that follows the wake word...
                 #record_speech.record_speech()
 
-                print("Openning Recording Stream...")
-                stream = p.open(format            = SAMPLE_FORMAT,
-                               channels           = CHANNELS,
-                               rate               = SAMPLE_RATE,
-                               input              = True,
-                               output             = False,
-                               frames_per_buffer  = CHUNK,
-                               input_device_index = INPUT_DEVICE_INDEX)
-                print("Stream Open...")
                 frames = []
                 try:
                    s_count   = 0
