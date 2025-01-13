@@ -155,14 +155,8 @@ try:
                 print(transcription.text)
                 
                 # Now decode the transcript to work out what action is to be taken.
-                r, exit_flag = command_parser.parse_command(transcript.text)       
+                r, exit_flag = command_parser.parse_command(transcription.text)       
                 print("Command response was : ", r)
-                audio_stream = tts_client.generate(
-                    text="This is a... streaming voice!!",
-                    stream=True
-                    )
-
-                stream(audio_stream)
                 if exit_flag:
                     working = False
                 else:                    
