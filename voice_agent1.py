@@ -99,21 +99,21 @@ try:
                        # Detect a silent frame
                        if get_max(data) < THRESHOLD:
                           s_count += 1
-                       print("n_count=", str(n_count), ", s_count=", str(s_count))
-                       # Look for enough silent frames occuring AFTER a noisy period to stop recording
-                       if (s_count > SILENT_CHUNKS) and (n_count > NOISY_CHUNKS):
-                          recording = False
-                          print("Stopped recording.")
+                          print("n_count=", str(n_count), ", s_count=", str(s_count))
+                          # Look for enough silent frames occuring AFTER a noisy period to stop recording
+                          if (s_count > SILENT_CHUNKS) and (n_count > NOISY_CHUNKS):
+                             recording = False
+                             print("Stopped recording.")
                        else:
                           # This is a noisy frame
                           n_count  += 1
                           s_count   = 0
-                       if not appending:
-                          print("Recording - press Ctrl-c to stop...")
+                          if not appending:
+                             print("Recording - press Ctrl-c to stop...")
                           appending = True # Start adding to the recorded data now
     
-                       if appending:
-                          frames.append(data)
+                          if appending:
+                             frames.append(data)
        
                except KeyboardInterrupt:
                print("Finished recording.")
