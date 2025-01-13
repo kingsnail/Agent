@@ -31,6 +31,7 @@ def main() -> None:
     #) as response:
     #    response.stream_to_file(speech_file_path)
 
+    print("Transcribing...")
     # Create transcription from audio file into English
     transcription = openai.audio.transcriptions.create(
         model    = "whisper-1",
@@ -51,12 +52,6 @@ def main() -> None:
 def stream_to_speakers( text = "No stream text supplied.") -> None:
     import pyaudio
     p = pyaudio.PyAudio()
-    for i in range(p.get_device_count()):
-        info = p.get_device_info_by_index(i)
-        print(f"Device index {i}: {info['name']}")
-        print(f"  Max input channels : {info['maxInputChannels']}")
-        print(f"  Max output channels: {info['maxOutputChannels']}")
-        print("------")
         
     player_stream = p.open(format=pyaudio.paInt16, 
                            channels=1, 
