@@ -76,10 +76,6 @@ try:
 
         if keyword_index >= 0:
             print(f"Detected {keyword_path_names[keyword_index]}")
-            recorder.stop()
-            recorder.delete()
-            print("Recorder deleted.")
-            time.sleep(1)
             ## The keyword has been recognized. So now we are awake, capture speech.
             working = True
             while working:
