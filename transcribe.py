@@ -71,8 +71,8 @@ def stream_to_speakers() -> None:
                 What a wonderful world""",
     ) as response:
         print(f"Time to first byte: {int((time.time() - start_time) * 1000)}ms")
-        for chunk in response.iter_bytes(chunk_size=1024):
-            print("chunk")
+        for chunk in response.iter_bytes(chunk_size=2048):
+            #print("chunk")
             player_stream.write(chunk)
 
     print(f"Done in {int((time.time() - start_time) * 1000)}ms.")
