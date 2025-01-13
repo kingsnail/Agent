@@ -16,12 +16,13 @@ print("Loading environment variables...")
 load_dotenv()
 
 # the file name output you want to record into
-SPEECH_FILE_NAME   = "speech.wav"
-CHUNK              = 1024
-SAMPLE_FORMAT      = pyaudio.paInt16
-CHANNELS           = 1                  # mono, change to 2 if you want stereo
-INPUT_DEVICE_INDEX = 1
-SAMPLE_RATE        = 48000
+SPEECH_FILE_NAME    = "speech.wav"
+CHUNK               = 1024
+SAMPLE_FORMAT       = pyaudio.paInt16
+CHANNELS            = 1                  # mono, change to 2 if you want stereo
+INPUT_DEVICE_INDEX  = 1
+OUTPUT_DEVICE_INDEX = 1
+SAMPLE_RATE         = 48000
 
 THRESHOLD     = 500
 SILENT_CHUNKS = 100
@@ -157,12 +158,32 @@ try:
                 # Now decode the transcript to work out what action is to be taken.
                 r, exit_flag = command_parser.parse_command(transcription.text)       
                 print("Command response was : ", r)
+
+                player_stream = p.open(format              = SAMPLE_FORMAT 
+                                       channels            = CHANNELS, 
+                                       rate                = 24000, 
+                                       output              = True,
+                                       output_device_index = OUTPUT_DEVICE_INDEX)
+
+                start_time = time.time()
+
+                with openai.audio.speech.with_streaming_response.create(
+                    model           = "tts-1",
+                    voice           = "alloy",
+                    response_format = "pcm",  # similar to WAV, but without a header chunk at the start.
+                    input           = r,
+                    ) as response:
+                        print(f"Time to first byte: {int((time.time() - start_time) * 1000)}ms")
+                        for chunk in response.iter_bytes(chunk_size=2048):
+                        #print("chunk")
+                        player_stream.write(chunk)
+
+                print(f"Done in {int((time.time() - start_time) * 1000)}ms.")
+
                 if exit_flag:
                     working = False
                 else:                    
                     print("Next...")
-            #recorder = PvRecorder(device_index=-1, frame_length=porcupine.frame_length)
-            #recorder.start()
 except KeyboardInterrupt:
     recorder.stop()
 except Exception as e: 
