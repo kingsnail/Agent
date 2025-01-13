@@ -33,8 +33,9 @@ def main() -> None:
 
     # Create transcription from audio file into English
     transcription = openai.audio.transcriptions.create(
-        model="whisper-1",
-        file=speech_file_path,
+        model    = "whisper-1",
+        file     = speech_file_path,
+        language = "en",
     )
     print("Transcription is :")
     print(transcription.text)
