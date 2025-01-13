@@ -80,16 +80,16 @@ try:
                 #record_speech.record_speech()
 
                 print("Openning Recording Stream...")
-               stream = p.open(format            = SAMPLE_FORMAT,
-                              channels           = CHANNELS,
-                              rate               = SAMPLE_RATE,
-                              input              = True,
-                              output             = False,
-                              frames_per_buffer  = CHUNK,
-                              input_device_index = INPUT_DEVICE_INDEX)
-               print("Stream Open...")
-               frames = []
-               try:
+                stream = p.open(format            = SAMPLE_FORMAT,
+                               channels           = CHANNELS,
+                               rate               = SAMPLE_RATE,
+                               input              = True,
+                               output             = False,
+                               frames_per_buffer  = CHUNK,
+                               input_device_index = INPUT_DEVICE_INDEX)
+                print("Stream Open...")
+                frames = []
+                try:
                    s_count   = 0
                    n_count   = 0
                    recording = True
@@ -110,39 +110,26 @@ try:
                           s_count   = 0
                           if not appending:
                              print("Recording - press Ctrl-c to stop...")
-                          appending = True # Start adding to the recorded data now
-    
+                             appending = True # Start adding to the recorded data now
                           if appending:
                              frames.append(data)
        
-               except KeyboardInterrupt:
-               print("Finished recording.")
+                except KeyboardInterrupt:
+                print("Finished recording.")
         
-    # stop and close stream
-    stream.stop_stream()
-    stream.close()
-    # terminate pyaudio object
-    p.terminate()
-    # save audio file
-    # open the file in 'write bytes' mode
-    wf = wave.open(filename, "wb")
-    # set the channels
-    wf.setnchannels(channels)
-    # set the sample format
-    wf.setsampwidth(p.get_sample_size(FORMAT))
-    # set the sample rate
-    wf.setframerate(sample_rate)
-    # write the frames as bytes
-    wf.writeframes(b"".join(frames))
-    # close the file
-    wf.close()
+                stream.stop_stream()
+                stream.close()
+                # terminate pyaudio object
+                p.terminate()
+                # save audio file
+                # open the file in 'write bytes' mode
+                wf = wave.open(SPEECH_FILE_NAME, "wb")
+                wf.setnchannels(CHANNELS)
+                wf.setsampwidth(p.get_sample_size(SAMPLE_FORMAT))
+                wf.setframerate(SAMPLE_RATE)
+                wf.writeframes(b"".join(frames))
+                wf.close()
 
-
-
-                
-
-
-                
                 ## Transcribe the captured text
                 print("Transcribing...")
                 audio_file = open("speech.wav", "rb")
