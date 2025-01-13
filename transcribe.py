@@ -44,8 +44,13 @@ def main() -> None:
 
 def stream_to_speakers() -> None:
     import pyaudio
-    devices = pyaudio.get_devices_by_index()
-    
+    for i in range(pyaudio.get_device_count()):
+        info = pyaudio.get_device_info_by_index(i)
+        print(f"Device index {i}: {info['name']}")
+        print(f"  Max input channels : {info['maxInputChannels']}")
+        print(f"  Max output channels: {info['maxOutputChannels']}")
+        print("------")
+        
     player_stream = pyaudio.PyAudio().open(format=pyaudio.paInt16, 
                                            channels=1, 
                                            rate=24000, 
