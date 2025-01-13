@@ -13,10 +13,13 @@ load_dotenv()
 # gets OPENAI_API_KEY from your environment variables
 openai = OpenAI()
 
-speech_file_path = Path(__file__).parent / "speech.mp3"
-
+speech_file_path = Path(__file__).parent / "test_tran.wav"
 
 def main() -> None:
+    print("")
+    print("")
+    print("")
+    print("")
     print("Starting")
     stream_to_speakers("The audio stream is working.")
 
@@ -29,11 +32,12 @@ def main() -> None:
     #    response.stream_to_file(speech_file_path)
 
     # Create transcription from audio file into English
-    #transcription = openai.audio.transcriptions.create(
-    #    model="whisper-1",
-    #    file=speech_file_path,
-    #)
-    #print(transcription.text)
+    transcription = openai.audio.transcriptions.create(
+        model="whisper-1",
+        file=speech_file_path,
+    )
+    print("Transcription is :")
+    print(transcription.text)
 
     # Create translation from audio file
     #translation = openai.audio.translations.create(
