@@ -5,6 +5,7 @@ import struct
 
 import pyaudio
 import wave
+import audioop
 import pvporcupine
 import command_parser
 import os
@@ -21,12 +22,24 @@ CHUNK              = 1024
 SAMPLE_FORMAT      = pyaudio.paInt16
 CHANNELS           = 1                  # mono, change to 2 if you want stereo
 INPUT_DEVICE_INDEX = 1
-SAMPLE_RATE        = 16000
+SAMPLE_RATE        = 48000
 
 THRESHOLD     = 500
 SILENT_CHUNKS = 100
 NOISY_CHUNKS  = 20
 
+
+def downsample_48k_to_16k(raw_pcm_data):
+    # raw_pcm_data is 16-bit mono @ 48k, chunk of audio
+    # We'll need separate state objects if doing this in a loop
+    # for continuous streaming.
+    state = None
+    # "ratecv" arguments:
+    #   data, width, nchannels, inRate, outRate, state
+    #   width=2 -> 16-bit samples
+    out_data, state = audioop.ratecv(raw_pcm_data, 2, 1, 48000, 16000, state)
+    return out_data
+    
 def get_max(d):
     m = 0
     for i in range(0, len(d), 2):
@@ -72,7 +85,7 @@ try:
         # Convert bytes to 16-bit samples
         audio_frame = struct.unpack_from("h" * porcupine.frame_length, pcm)
         # Process the audio frame with Porcupine
-        keyword_index = porcupine.process(audio_frame)
+        keyword_index = porcupine.process(downsample_48k_to_16k(audio_frame))
 
         if keyword_index >= 0:
             print(f"Detected {keyword_path_names[keyword_index]}")
