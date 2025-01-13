@@ -159,7 +159,7 @@ try:
                 r, exit_flag = command_parser.parse_command(transcription.text)       
                 print("Command response was : ", r)
 
-                player_stream = p.open(format              = SAMPLE_FORMAT 
+                player_stream = p.open(format              = SAMPLE_FORMAT,
                                        channels            = CHANNELS, 
                                        rate                = 24000, 
                                        output              = True,
