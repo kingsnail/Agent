@@ -21,7 +21,7 @@ CHUNK               = 1024
 SAMPLE_FORMAT       = pyaudio.paInt16
 CHANNELS            = 1                  # mono, change to 2 if you want stereo
 INPUT_DEVICE_INDEX  = 1
-OUTPUT_DEVICE_INDEX = 1
+OUTPUT_DEVICE_INDEX = 0
 SAMPLE_RATE         = 48000
 
 THRESHOLD     = 500
@@ -160,10 +160,11 @@ try:
                 player_stream = p.open(format              = SAMPLE_FORMAT,
                                        channels            = CHANNELS, 
                                        rate                = 24000, 
+                                       input               = False,
                                        output              = True,
                                        output_device_index = OUTPUT_DEVICE_INDEX,
                                       )
-
+                print("output stream open...")
                 start_time = time.time()
 
                 with openai.audio.speech.with_streaming_response.create(
