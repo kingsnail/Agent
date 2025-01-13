@@ -131,8 +131,6 @@ try:
         
                 stream.stop_stream()
                 stream.close()
-                # terminate pyaudio object
-                p.terminate()
                 # save audio file
                 # open the file in 'write bytes' mode
                 wf = wave.open(SPEECH_FILE_NAME, "wb")
@@ -163,7 +161,8 @@ try:
                                        channels            = CHANNELS, 
                                        rate                = 24000, 
                                        output              = True,
-                                       output_device_index = OUTPUT_DEVICE_INDEX)
+                                       output_device_index = OUTPUT_DEVICE_INDEX,
+                                      )
 
                 start_time = time.time()
 
