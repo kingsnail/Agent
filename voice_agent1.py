@@ -115,6 +115,7 @@ try:
                              frames.append(data)
        
                 except KeyboardInterrupt:
+                    print("Keyboard Interrupt.")
                 print("Finished recording.")
         
                 stream.stop_stream()
