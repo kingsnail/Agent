@@ -9,12 +9,13 @@ import record_speech
 import command_parser
 import os
 import time
-import openai
+from   openai import OpenAI
 
 ## Load the .env file
 print("Loading environment variables...")
 load_dotenv()
 
+openai = OpenAI()
 ## Setup for Porcupine wakeword detection
 keywords_list      = ['picovoice', 'bumblebee']
 keyword_path_list  = ['Dumb-Ass_en_raspberry-pi_v3_0_0.ppn']
