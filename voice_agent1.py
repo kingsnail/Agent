@@ -91,7 +91,7 @@ try:
         print("Stream Open...")
   
     while True:
-        if stream.isActive == False:
+        if stream.is_active() == False:
             stream.start_stream()
         pcm = stream.read(porcupine.frame_length * 3)        
         data16k = downsample_48k_to_16k(pcm)
@@ -176,7 +176,7 @@ try:
                     print("output stream open...")
                 start_time = time.time()
 
-                if player_stream.isActive() == False:
+                if player_stream.is_active() == False:
                     player_stream.start_stream()
                     
                 with openai.audio.speech.with_streaming_response.create(
