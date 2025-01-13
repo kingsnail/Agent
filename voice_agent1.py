@@ -5,7 +5,6 @@ import os
 
 import pvporcupine
 from   pvrecorder import PvRecorder
-import record_speech
 import command_parser
 import os
 import time
