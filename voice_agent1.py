@@ -1,4 +1,8 @@
 print("voice_agent.py")
+from dotenv import load_dotenv
+import os
+
+
 import pvporcupine
 from   pvrecorder import PvRecorder
 import record_speech
@@ -6,14 +10,10 @@ import command_parser
 import os
 import time
 import openai
-from elevenlabs.client import ElevenLabs
-from elevenlabs import stream
 
-## Setup for Eleven Labs Speech Generation
-##tts_client = ElevenLabs(
-##  api_key=os.getenv("ELEVENLABS_API_KEY"),
-##)
-##voice       = user_11labs.get_voices_by_name("Rachel")[0]  # This is a list because multiple voices can have the same name
+## Load the .env file
+print("Loading environment variables...")
+load_dotenv()
 
 ## Setup for Porcupine wakeword detection
 keywords_list      = ['picovoice', 'bumblebee']
