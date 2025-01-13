@@ -74,18 +74,25 @@ porcupine = pvporcupine.create(
     keyword_paths= keyword_path_list
 )
 
+input_stream_open  = False
+output_stream_open = False
+
 try:
     print("Listening...")
-    stream = p.open(format            = SAMPLE_FORMAT,
-                    channels           = CHANNELS,
-                    rate               = SAMPLE_RATE,
-                    input              = True,
-                    output             = False,
-                    frames_per_buffer  = CHUNK,
-                    input_device_index = INPUT_DEVICE_INDEX)
-    print("Stream Open...")
+    if input_stream_open == False:
+        stream = p.open(format            = SAMPLE_FORMAT,
+                        channels           = CHANNELS,
+                        rate               = SAMPLE_RATE,
+                        input              = True,
+                        output             = False,
+                        frames_per_buffer  = CHUNK,
+                        input_device_index = INPUT_DEVICE_INDEX)
+        input_stream_open = True
+        print("Stream Open...")
   
     while True:
+        if stream.isActive == False:
+            stream.start_stream()
         pcm = stream.read(porcupine.frame_length * 3)        
         data16k = downsample_48k_to_16k(pcm)
         # Process the audio frame with Porcupine
@@ -129,7 +136,7 @@ try:
                     print("Keyboard Interrupt.")
                 print("Finished recording.")
         
-                #stream.stop_stream()
+                stream.stop_stream()
                 #stream.close()
                 # save audio file
                 # open the file in 'write bytes' mode
@@ -157,16 +164,21 @@ try:
                 r, exit_flag = command_parser.parse_command(transcription.text)       
                 print("Command response was : ", r)
 
-                player_stream = p.open(format              = SAMPLE_FORMAT,
-                                       channels            = CHANNELS, 
-                                       rate                = 24000, 
-                                       input               = False,
-                                       output              = True,
-                                       output_device_index = OUTPUT_DEVICE_INDEX,
-                                      )
-                print("output stream open...")
+                if output_stream_open == False:
+                    player_stream = p.open(format              = SAMPLE_FORMAT,
+                                           channels            = CHANNELS, 
+                                           rate                = 24000, 
+                                           input               = False,
+                                           output              = True,
+                                           output_device_index = OUTPUT_DEVICE_INDEX,
+                                          )
+                    output_stream_open = True
+                    print("output stream open...")
                 start_time = time.time()
 
+                if player_stream.isActive() == False:
+                    player_stream.start_stream()
+                    
                 with openai.audio.speech.with_streaming_response.create(
                     model           = "tts-1",
                     voice           = "alloy",
@@ -179,7 +191,7 @@ try:
                             player_stream.write(chunk)
 
                 print(f"Done in {int((time.time() - start_time) * 1000)}ms.")
-
+                player_stream.stop_stream()
                 if exit_flag:
                     working = False
                 else:                    
