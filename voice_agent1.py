@@ -38,8 +38,8 @@ def get_max(d):
     return m
     
 # initialize PyAudio object
-print("Instantiate PyAudio...")
-p = pyaudio.PyAudio()
+#print("Instantiate PyAudio...")
+#p = pyaudio.PyAudio()
 
 print("Initialize OpenAI API...")
 openai = OpenAI()
@@ -57,7 +57,7 @@ porcupine = pvporcupine.create(
 )
 
 ## Create the recorder for Porcupine
-recorder = PvRecorder(device_index=-1, 
+recorder = PvRecorder(device_index=1, 
                       frame_length=porcupine.frame_length
 )
 
