@@ -129,8 +129,8 @@ try:
                     print("Keyboard Interrupt.")
                 print("Finished recording.")
         
-                stream.stop_stream()
-                stream.close()
+                #stream.stop_stream()
+                #stream.close()
                 # save audio file
                 # open the file in 'write bytes' mode
                 wf = wave.open(SPEECH_FILE_NAME, "wb")
