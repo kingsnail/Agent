@@ -5,7 +5,6 @@ import struct
 
 import pyaudio
 import wave
-import audioop
 import pvporcupine
 import command_parser
 import os
@@ -29,16 +28,22 @@ SILENT_CHUNKS = 100
 NOISY_CHUNKS  = 20
 
 
+import numpy as np
+from scipy.signal import resample_poly
+
 def downsample_48k_to_16k(raw_pcm_data):
-    # raw_pcm_data is 16-bit mono @ 48k, chunk of audio
-    # We'll need separate state objects if doing this in a loop
-    # for continuous streaming.
-    state = None
-    # "ratecv" arguments:
-    #   data, width, nchannels, inRate, outRate, state
-    #   width=2 -> 16-bit samples
-    out_data, state = audioop.ratecv(raw_pcm_data, 2, 1, 48000, 16000, state)
-    return out_data
+    # Convert bytes to int16 array
+    samples_48k = np.frombuffer(raw_pcm_data, dtype=np.int16)
+
+    # Use polyphase resampling: factor of 1/3 (48k -> 16k)
+    # "resample_poly" is quite good for audio
+    samples_16k = resample_poly(samples_48k, up=1, down=3)
+
+    # Convert back to int16 (watch out for rounding)
+    samples_16k = samples_16k.astype(np.int16)
+
+    # Return bytes
+    return samples_16k.tobytes()
     
 def get_max(d):
     m = 0
