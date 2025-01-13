@@ -79,7 +79,67 @@ try:
                 ## Now record the speech that follows the wake word...
                 #record_speech.record_speech()
 
+                print("Openning Recording Stream...")
+               stream = p.open(format            = SAMPLE_FORMAT,
+                              channels           = CHANNELS,
+                              rate               = SAMPLE_RATE,
+                              input              = True,
+                              output             = False,
+                              frames_per_buffer  = CHUNK,
+                              input_device_index = INPUT_DEVICE_INDEX)
+               print("Stream Open...")
+               frames = []
+               try:
+                   s_count   = 0
+                   n_count   = 0
+                   recording = True
+                   appending = False
+                   while(recording):
+                       data = stream.read(chunk)
+                       # Detect a silent frame
+                       if get_max(data) < THRESHOLD:
+                          s_count += 1
+                       print("n_count=", str(n_count), ", s_count=", str(s_count))
+                       # Look for enough silent frames occuring AFTER a noisy period to stop recording
+                       if (s_count > SILENT_CHUNKS) and (n_count > NOISY_CHUNKS):
+                          recording = False
+                          print("Stopped recording.")
+                       else:
+                          # This is a noisy frame
+                          n_count  += 1
+                          s_count   = 0
+                       if not appending:
+                          print("Recording - press Ctrl-c to stop...")
+                          appending = True # Start adding to the recorded data now
+    
+                       if appending:
+                          frames.append(data)
+       
+               except KeyboardInterrupt:
+               print("Finished recording.")
+        
+    # stop and close stream
+    stream.stop_stream()
+    stream.close()
+    # terminate pyaudio object
+    p.terminate()
+    # save audio file
+    # open the file in 'write bytes' mode
+    wf = wave.open(filename, "wb")
+    # set the channels
+    wf.setnchannels(channels)
+    # set the sample format
+    wf.setsampwidth(p.get_sample_size(FORMAT))
+    # set the sample rate
+    wf.setframerate(sample_rate)
+    # write the frames as bytes
+    wf.writeframes(b"".join(frames))
+    # close the file
+    wf.close()
 
+
+
+                
 
 
                 
