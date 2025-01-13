@@ -84,8 +84,9 @@ try:
         pcm = stream.read(porcupine.frame_length)        
         # Convert bytes to 16-bit samples
         audio_frame = struct.unpack_from("h" * porcupine.frame_length, pcm)
+        data16k = downsample_48k_to_16k(audio_frame)
         # Process the audio frame with Porcupine
-        keyword_index = porcupine.process(downsample_48k_to_16k(audio_frame))
+        keyword_index = porcupine.process(data16k)
 
         if keyword_index >= 0:
             print(f"Detected {keyword_path_names[keyword_index]}")
