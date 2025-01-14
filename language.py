@@ -1,7 +1,5 @@
 class Language():
-
-    language_code : text
-  
+ 
     def __init__(self) -> None:
         self.language_code = "en"
 
