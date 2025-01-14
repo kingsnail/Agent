@@ -11,6 +11,9 @@ import os
 import time
 from   openai import OpenAI
 
+import numpy as np
+from scipy.signal import resample_poly
+
 ## Load the .env file
 print("Loading environment variables...")
 load_dotenv()
@@ -24,13 +27,11 @@ INPUT_DEVICE_INDEX  = 1
 OUTPUT_DEVICE_INDEX = 0
 SAMPLE_RATE         = 48000
 
-THRESHOLD           = 500  # Threshold value for silence in the input audio stream
-SILENT_CHUNKS       = 100  # Number of chunks of silence needed to establish a pause
-NOISY_CHUNKS        = 20   # Minimum noisy chunks allowed
-SILENCE_CHUNK_LIMIT = 200  # Number of chunks to read to calibrate THRESHOLD
-
-import numpy as np
-from scipy.signal import resample_poly
+THRESHOLD               = 500  # Threshold value for silence in the input audio stream
+SILENT_CHUNKS           = 100  # Number of chunks of silence needed to establish a pause
+NOISY_CHUNKS            = 20   # Minimum noisy chunks allowed
+SILENCE_CHUNK_LIMIT     = 200  # Number of chunks to read to calibrate THRESHOLD
+SILENCE_OVERHEAD_FACTOR = 1.10 # Multiplier for silence threshold after calibration to give headroom
 
 def downsample_48k_to_16k(raw_pcm_data):
     # Convert bytes to int16 array
@@ -102,7 +103,10 @@ while chunk_count < SILENCE_CHUNK_LIMIT:
         print("New THRESHOLD = ", THRESHOLD)
     chunk_count += 1
 stream.stop_stream()
+THRESHOLD = int(THRESHOLD * SILENCE_OVERHEAD_FACTOR)
+print("Final THRESHOLD = ", THRESHOLD)
 print("Calibration Complete")
+
 try:
     print("Listening for wakeword...")
     if input_stream_open == False:
