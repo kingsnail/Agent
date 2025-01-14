@@ -55,6 +55,7 @@ def parse_command(t):
    ### Change to Farsi ###
    m = re.match(change_to_english, t.lower())
    if m != None:
+      my_lang.set_language_to_english()
       response_text = "Lanquage has been changed to English."
       
    ### Add to shopping list ###
