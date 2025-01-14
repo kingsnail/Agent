@@ -5,9 +5,9 @@ import re
 import json
 
 import mail_utils
-import language
+import Language from language
 
-my_lang = language.language()
+my_lang = Language()
 
 def get_command_language():
    return my_lang.get_language()
