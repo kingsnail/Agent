@@ -38,9 +38,22 @@ def parse_command(t):
     ask_chatGPT          = r"(A|a)(sk\s+)(chat)?(\s*gpt)?(?P<query>.*)"
     exit_command         = r"(that)(\s+is|\'s)\s+all.*"
     email_strip          = r"(\s*to\s+)(?P<mail_name>\w+)"
-    ### Add to shopping list ###
-    m = re.match(add_to_shopping_list, t.lower())
-    if m != None:
+    change_to_english    = r"(\s*change\s+to\s+(english|English))"
+    change_to_persian    = r"(\s*change\s+to\s+(persian|Persian|farsi|Farsi))"
+
+   ### Change to English ###
+   m = re.match(change_to_english, t.lower())
+   if m != None:
+      response_text = "Lanquage has been changed to English."
+
+   ### Change to Farsi ###
+   m = re.match(change_to_english, t.lower())
+   if m != None:
+      response_text = "Lanquage has been changed to English."
+      
+   ### Add to shopping list ###
+   m = re.match(add_to_shopping_list, t.lower())
+   if m != None:
         items = []
         c     = m.group("items").split(",")
         print("c=", str(c))
