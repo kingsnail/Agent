@@ -5,7 +5,7 @@ import re
 import json
 
 import mail_utils
-import Language from language
+from language import Language
 
 my_lang = Language()
 
