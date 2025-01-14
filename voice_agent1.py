@@ -136,6 +136,8 @@ try:
                     print("n_count = ", n_count)
                     print("s_count = ", s_count)
                 except KeyboardInterrupt:
+                    print("n_count = ", n_count)
+                    print("s_count = ", s_count)
                     print("Keyboard Interrupt.")
                 print("Finished recording.")
         
