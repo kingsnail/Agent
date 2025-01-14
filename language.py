@@ -3,7 +3,7 @@ class Language():
     def __init__(self) -> None:
         self.language_code = "en"
 
-    def get_language_code(self) -> Text:
+    def get_language_code(self):
        return self.language_code
       
     def set_to_farsi(self) -> None:
