@@ -24,10 +24,10 @@ INPUT_DEVICE_INDEX  = 1
 OUTPUT_DEVICE_INDEX = 0
 SAMPLE_RATE         = 48000
 
-THRESHOLD     = 500  # Threshold value for silence in the input audio stream
-SILENT_CHUNKS = 100  # Number of chunks of silence needed to establish a pause
-NOISY_CHUNKS  = 20   # Minimum noisy chunks allowed
-
+THRESHOLD           = 500  # Threshold value for silence in the input audio stream
+SILENT_CHUNKS       = 100  # Number of chunks of silence needed to establish a pause
+NOISY_CHUNKS        = 20   # Minimum noisy chunks allowed
+SILENCE_CHUNK_LIMIT = 50   # Number of chunks to read to calibrate THRESHOLD
 
 import numpy as np
 from scipy.signal import resample_poly
@@ -77,8 +77,34 @@ porcupine = pvporcupine.create(
 input_stream_open  = False
 output_stream_open = False
 
+## calibrate the input stream for silence
+print("Starting Calibration...")
+if input_stream_open == False:
+    stream = p.open(format            = SAMPLE_FORMAT,
+                    channels           = CHANNELS,
+                    rate               = SAMPLE_RATE,
+                    input              = True,
+                    output             = False,
+                    frames_per_buffer  = CHUNK,
+                    input_device_index = INPUT_DEVICE_INDEX)
+    input_stream_open = True
+    print("Stream open for calibration...")
+if stream.is_active() == False:
+    stream.start_stream()
+
+chunk_count = 0
+noise_limit = THRESHOLD
+while chunk_count < SILENCE_CHUNK_LIMIT
+    silence     = stream.read( CHUNK )
+    noise_limit = get_max(silence)
+    if noise_limit > THRESHOLD:
+        THRESHOLD = noise_limit
+        print("New THRESHOLD = ", THRESHOLD)
+    chunk_count += 1
+stream.stop_stream()
+print("Calibration Complete")
 try:
-    print("Listening...")
+    print("Listening for wakeword...")
     if input_stream_open == False:
         stream = p.open(format            = SAMPLE_FORMAT,
                         channels           = CHANNELS,
@@ -104,8 +130,6 @@ try:
             working = True
             while working:
                 ## Now record the speech that follows the wake word...
-                #record_speech.record_speech()
-
                 frames = []
                 try:
                     s_count   = 0
@@ -179,7 +203,6 @@ try:
                                           )
                     output_stream_open = True
                     print("output stream open...")
-                start_time = time.time()
 
                 if player_stream.is_active() == False:
                     player_stream.start_stream()
@@ -195,7 +218,6 @@ try:
                             #print("chunk")
                             player_stream.write(chunk)
 
-                print(f"Done in {int((time.time() - start_time) * 1000)}ms.")
                 player_stream.stop_stream()
                 if exit_flag:
                     working = False
