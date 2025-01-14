@@ -75,6 +75,7 @@ porcupine = pvporcupine.create(
     keyword_paths= keyword_path_list
 )
 
+print("Language is set to " + command_parser.get_command_language())
 input_stream_open  = False
 output_stream_open = False
 
