@@ -5,7 +5,13 @@ import re
 import json
 
 import mail_utils
+import language
 
+my_lang = new(language)
+
+def get_command_language():
+   return my_lang.get_language()
+   
 ## Setup for OpenAI
 openai.api_key      = os.getenv("OPENAI_API_KEY")
 openai.organization = os.getenv("OPENAI_ORG")
