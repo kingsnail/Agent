@@ -27,7 +27,7 @@ SAMPLE_RATE         = 48000
 THRESHOLD           = 500  # Threshold value for silence in the input audio stream
 SILENT_CHUNKS       = 100  # Number of chunks of silence needed to establish a pause
 NOISY_CHUNKS        = 20   # Minimum noisy chunks allowed
-SILENCE_CHUNK_LIMIT = 50   # Number of chunks to read to calibrate THRESHOLD
+SILENCE_CHUNK_LIMIT = 200  # Number of chunks to read to calibrate THRESHOLD
 
 import numpy as np
 from scipy.signal import resample_poly
