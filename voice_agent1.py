@@ -28,8 +28,8 @@ OUTPUT_DEVICE_INDEX = 0
 SAMPLE_RATE         = 48000
 
 THRESHOLD               = 500  # Threshold value for silence in the input audio stream
-SILENT_CHUNKS           = 100  # Number of chunks of silence needed to establish a pause
-NOISY_CHUNKS            = 20   # Minimum noisy chunks allowed
+SILENT_CHUNKS           = 50   # Number of chunks of silence needed to establish a pause
+NOISY_CHUNKS            = 15   # Minimum noisy chunks allowed
 SILENCE_CHUNK_LIMIT     = 200  # Number of chunks to read to calibrate THRESHOLD
 SILENCE_OVERHEAD_FACTOR = 1.10 # Multiplier for silence threshold after calibration to give headroom
 
