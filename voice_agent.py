@@ -26,6 +26,7 @@ CHANNELS            = 1                  # mono, change to 2 if you want stereo
 INPUT_DEVICE_INDEX  = 1
 OUTPUT_DEVICE_INDEX = 0
 SAMPLE_RATE         = 48000
+LANGUAGE            = "en"
 
 THRESHOLD               = 500  # Threshold value for silence in the input audio stream
 SILENT_CHUNKS           = 50   # Number of chunks of silence needed to establish a pause
@@ -75,7 +76,8 @@ porcupine = pvporcupine.create(
     keyword_paths= keyword_path_list
 )
 
-print("Language is set to " + command_parser.get_command_language())
+LANGUAGE = command_parser.get_command_language()
+print("Language is set to " + LANGUAGE)
 input_stream_open  = False
 output_stream_open = False
 
@@ -185,13 +187,15 @@ try:
                 print("Transcribing...")
                 audio_file = open(SPEECH_FILE_NAME, "rb")
 
+                LANGUAGE = command_parser.get_command_language()
+
                 # Create transcription from audio file into English
                 transcription = openai.audio.transcriptions.create(
                                     model    = "whisper-1",
                                     file     = audio_file,
-                                    language = "en",
+                                    language = LANGUAGE,
                                     )
-                print("You said:")
+                print("You said in ", LANGUAGE)
                 print(transcription.text)
                 
                 # Now decode the transcript to work out what action is to be taken.
