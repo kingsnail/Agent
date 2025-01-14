@@ -190,7 +190,7 @@ try:
                 LANGUAGE = command_parser.get_command_language()
 
                 # Create transcription from audio file into English
-                transcription = openai.audio.translations.create(
+                transcription = openai.audio.transcriptions.create(
                                     model    = "whisper-1",
                                     file     = audio_file,
                                     language = LANGUAGE,
