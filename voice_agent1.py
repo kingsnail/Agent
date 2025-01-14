@@ -159,8 +159,8 @@ try:
                            if not appending:
                                print("Recording - press Ctrl-c to stop...")
                                appending = True # Start adding to the recorded data now
-                           if appending:
-                               frames.append(data)
+                        if appending:
+                            frames.append(data)
                     print("n_count = ", n_count)
                     print("s_count = ", s_count)
                 except KeyboardInterrupt:
