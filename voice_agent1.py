@@ -94,7 +94,7 @@ if stream.is_active() == False:
 
 chunk_count = 0
 noise_limit = THRESHOLD
-while chunk_count < SILENCE_CHUNK_LIMIT
+while chunk_count < SILENCE_CHUNK_LIMIT:
     silence     = stream.read( CHUNK )
     noise_limit = get_max(silence)
     if noise_limit > THRESHOLD:
