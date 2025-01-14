@@ -50,13 +50,14 @@ def parse_command(t):
    ### Change to English ###
    m = re.match(change_to_english, t.lower())
    if m != None:
+      my_lang.set_to_english()
       response_text = "Lanquage has been changed to English."
 
    ### Change to Farsi ###
-   m = re.match(change_to_english, t.lower())
+   m = re.match(change_to_persian, t.lower())
    if m != None:
-      my_lang.set_language_to_english()
-      response_text = "Lanquage has been changed to English."
+      my_lang.set_to_farsi()
+      response_text = "Lanquage has been changed to Persian."
       
    ### Add to shopping list ###
    m = re.match(add_to_shopping_list, t.lower())
