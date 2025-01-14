@@ -7,7 +7,7 @@ import json
 import mail_utils
 import language
 
-my_lang = new language.language()
+my_lang = language()
 
 def get_command_language():
    return my_lang.get_language()
