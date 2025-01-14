@@ -10,7 +10,7 @@ from language import Language
 my_lang = Language()
 
 def get_command_language():
-   return my_lang.get_language()
+   return my_lang.get_language_code()
    
 ## Setup for OpenAI
 openai.api_key      = os.getenv("OPENAI_API_KEY")
